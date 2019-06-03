@@ -1,0 +1,26 @@
+{
+  "name": "ls",
+  "version": "1.0.0",
+  "description": "采集比特币前100地址每天持币数量的报表",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "start:dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yca2220206/bitcoinaddress-top-100-change-report.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yca2220206/bitcoinaddress-top-100-change-report/issues"
+  },
+  "homepage": "https://github.com/yca2220206/bitcoinaddress-top-100-change-report#readme",
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.5.1"
+  },
+  "dependencies": {}
+}
