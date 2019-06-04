@@ -19,8 +19,11 @@
   "homepage": "https://github.com/yca2220206/bitcoinaddress-top-100-change-report#readme",
   "devDependencies": {
     "nodemon": "^1.19.1",
-    "ts-node": "^8.2.0",
     "typescript": "^3.5.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@types/node": "^12.0.4",
+    "cheerio": "^1.0.0-rc.3",
+    "ts-node": "^8.2.0"
+  }
 }
