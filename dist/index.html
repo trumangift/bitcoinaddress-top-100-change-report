@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <script src="./echarts-all.js"></script>
+      <script src="./series.js"></script>
+    </head>
+    <body>
+        <div id="main" style="width: 100%;height:1000px;"></div>
+    </body>
+    <script>
+    function readTextFile(file, callback)
+    {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function ()
+        {
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status == 0)
+                {
+                    var allText = rawFile.responseText;
+                    callback(allText);
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+    readTextFile('http://localhost:3000/json', (data) => {
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+                data = JSON.parse(data); 
+                const xAxis = Object.keys(data);
+                const size = 19;
+                // 指定图表的配置项和数据
+                const ss = series(data, xAxis);
+                var option = {
+                    title: {
+                        text: '比特币财富报表'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['每个地址持有的比特币数量']
+                    },
+                    xAxis: {
+                        data: xAxis,
+                    },
+                    yAxis: {},
+                    series: ss,
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                };
+                myChart.setOption(option)
+    });
+    </script>
+</html>
