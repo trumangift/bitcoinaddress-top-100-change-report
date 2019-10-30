@@ -1,6 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.static('dist'));
 app.get('/json', function (req:any, res:any) {
@@ -15,6 +16,6 @@ app.get('/json', function (req:any, res:any) {
         res.json(data);
     });
 });
-app.listen(3000, () => {
+app.listen(port, () => {
    console.log('server is listening on 3000 port');
 });
