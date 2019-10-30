@@ -1,11 +1,32 @@
+"use strict";
 var express = require('express');
 var fs = require('fs');
 var app = express();
-const port = process.env.PORT || 3000;
-
+var port = process.env.PORT || 3000;
 app.use(express.static('dist'));
-app.get('/json', function (req, res) {
-    const text = fs.readFileSync(__dirname + '/dist/data.json');
-    res.status(200).send(text);
+/** 定时获取数据 **/
+var exec = require('child_process').exec;
+var shellOrder = 'sh /home/wwwroot/code/node.sh';
+var schedule = require('node-schedule');
+schedule.scheduleJob('20 * * * * *', function () {
+    exec(shellOrder, function (err, stdout, stderr) {
+        if (err) {
+            console.log('err: ', err);
+        }
+    });
 });
-app.listen(port);
+app.get('/json', function (req, res) {
+    var text = fs.readFile(__dirname + '/dist/data.json', 'utf-8', function (error, data) {
+        if (error) {
+            res.status(400).json({
+                message: error
+            });
+            return;
+        }
+        data = JSON.parse(data);
+        res.json(data);
+    });
+});
+app.listen(port, function () {
+    console.log('server is listening on 3000 port');
+});
