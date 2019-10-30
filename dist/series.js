@@ -18,7 +18,7 @@ const series = (function() {
               const serie =  {
                 name: addresses[i],
                 type: 'line',
-                data: addressDatasAllDate
+                data: addressDatasAllDate,
               };
               all_series.push(serie);
           }
