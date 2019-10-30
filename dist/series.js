@@ -22,6 +22,9 @@ const series = (function() {
               };
               all_series.push(serie);
           }
-          return all_series;
+          return {
+              addresses,
+              all_series
+          };
     };
 })();
