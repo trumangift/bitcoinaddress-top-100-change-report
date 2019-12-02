@@ -20,9 +20,9 @@ function distinct(arrays) {
 }
 
 const series = (function() {
-    const all_series = [];
+    let all_series = [];
     return function(data, xAxis) {
-          const addresses = getAllAddress(data, xAxis);
+          let addresses = getAllAddress(data, xAxis);
           for (var i = 0;i < addresses.length; i++) {
               const addressDatasAllDate = [];
               for(var j = 0; j < xAxis.length; j++) {
@@ -43,7 +43,15 @@ const series = (function() {
                 data: addressDatasAllDate,
               };
               all_series.push(serie);
+              all_series = all_series.sort((a, b) => {
+                   return b.data[b.data.length - 1] - a.data[a.data.length - 1];
+              });
           }
+          addresses = all_series.reduce((prev ,curr) => {
+             prev.push(curr.name);
+             return prev;  
+          }, []);
+          debugger;
           return {
               addresses,
               all_series
