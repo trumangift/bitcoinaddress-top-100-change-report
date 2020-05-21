@@ -17,6 +17,7 @@
       </style>
     </head>
     <body>
+        <h1 id='all-count'></h1>
         <button id='next'>
             下10条
         </button>
@@ -58,7 +59,24 @@
             });
             return result;
         }
-
+        function clearEmpty(ss) {
+            var addresses = ss.addresses;
+            var all_series = ss.all_series;
+            var filterData = all_series.filter((serie, i) => {
+                  var data = serie.data,
+                  name = serie.name;
+                  if (!data[data.length-1]) {
+                       addresses[i] = null;
+                       return false;
+                  }
+                  return true;
+            });
+            addresses = addresses.filter(d => {
+                return !!d;
+            })
+            ss.addresses = addresses;
+            ss.all_series = filterData;
+        }
         function render() {
             
             readTextFile('/json', (data) => {
@@ -66,9 +84,13 @@
                     var myChart = echarts.init(document.getElementById('main'));
                     data = JSON.parse(data);
                     const xAxis = Object.keys(data);
-                    const size = 19;
                     // 指定图表的配置项和数据
                     const ss = series(data, xAxis);
+                    // 当前数量为0的地址数据清洗
+                    clearEmpty(ss);
+
+                    const allCount = document.getElementById('all-count');
+                    allCount.textContent = '地址总数量:' +ss.addresses.length;
                     var selectedSS = getSelected(ss);
                     var option = {
                         title: {
