@@ -22,6 +22,7 @@ function distinct(arrays) {
 const series = (function() {
     let all_series = [];
     return function(data, xAxis) {
+         all_series = [];
           let addresses = getAllAddress(data, xAxis);
           for (var i = 0;i < addresses.length; i++) {
               const addressDatasAllDate = [];
@@ -40,6 +41,7 @@ const series = (function() {
               const serie =  {
                 name: addresses[i],
                 type: 'line',
+                smooth: true,
                 data: addressDatasAllDate,
               };
               all_series.push(serie);
@@ -51,7 +53,6 @@ const series = (function() {
              prev.push(curr.name);
              return prev;  
           }, []);
-          debugger;
           return {
               addresses,
               all_series
